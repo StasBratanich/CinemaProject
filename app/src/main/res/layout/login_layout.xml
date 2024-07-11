@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/movie_app_background"
+    android:orientation="vertical"
+    tools:context=".Fragments.LoginFragment">
+
+    <TextView
+        android:id="@+id/Main_line"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/purple"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="Cinema Management App"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/user_Name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="User Name"
+        android:textColorHint="@color/white" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email Password"
+        android:textColorHint="@color/white"/>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="380dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="13dp"
+        android:background="@color/purple"
+        android:gravity="center"
+        android:text="login"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</LinearLayout>
+
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".LoginFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:viewBindingIgnore="true" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:text="Cinema Management App"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="left"
+            tools:ignore="RtlHardcoded"
+            android:id="@+id/Main_line"
+            android:background="@color/purple"
+            android:padding="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/main_pic"
+            android:layout_width="240dp"
+            android:layout_height="203dp"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:src="@drawable/cinema_pic"
+            android:scaleType="fitXY"/>
+
+        &lt;!&ndash;    <EditText&ndash;&gt;
+        &lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;
+        &lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;
+        &lt;!&ndash;        android:hint="@string/user_name"&ndash;&gt;
+        &lt;!&ndash;        android:layout_gravity="center"&ndash;&gt;
+        &lt;!&ndash;        android:layout_margin="10dp"&ndash;&gt;
+        &lt;!&ndash;        />&ndash;&gt;
+
+        &lt;!&ndash;    <EditText&ndash;&gt;
+        &lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;
+        &lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;
+        &lt;!&ndash;        android:hint="@string/email_password"&ndash;&gt;
+        &lt;!&ndash;        android:layout_gravity="center"&ndash;&gt;
+        &lt;!&ndash;        android:layout_margin="10dp"&ndash;&gt;
+        &lt;!&ndash;        />&ndash;&gt;
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:hint="User Name"
+            android:id="@+id/user_Name">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:hint="Email Password"
+            android:id="@+id/password">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="380dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="13dp"
+            android:background="@color/purple"
+            android:gravity="center"
+            android:text="login"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>-->

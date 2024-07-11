@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/entryFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.cinemaproject.Fragments.LoginFragment"
+        android:label="login_layout"
+        tools:layout="@layout/login_layout" >
+        <action
+            android:id="@+id/action_loginFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.cinemaproject.Fragments.WelcomeFragment"
+        android:label="welcome_layout"
+        tools:layout="@layout/welcome_layout" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_showNowFragment"
+            app:destination="@id/showNowFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_allFavoriteFragment"
+            app:destination="@id/allFavoriteFragment" />
+        <action
+            android:id="@+id/action_welcomeFragment_to_upcomingFragment"
+            app:destination="@id/upcomingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/showNowFragment"
+        android:name="com.example.cinemaproject.Fragments.ShowNowFragment"
+        android:label="show_now_layout"
+        tools:layout="@layout/show_now_layout" />
+    <fragment
+        android:id="@+id/allFavoriteFragment"
+        android:name="com.example.cinemaproject.Fragments.AllFavoriteFragment"
+        android:label="favorite_layout"
+        tools:layout="@layout/favorite_layout" />
+    <fragment
+        android:id="@+id/upcomingFragment"
+        android:name="com.example.cinemaproject.Fragments.UpcomingFragment"
+        android:label="upcoming_layout"
+        tools:layout="@layout/upcoming_layout" />
+    <fragment
+        android:id="@+id/entryFragment"
+        android:name="com.example.cinemaproject.Fragments.EntryFragment"
+        android:label="fragment_entry"
+        tools:layout="@layout/fragment_entry" >
+        <action
+            android:id="@+id/action_entryFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_entryFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.cinemaproject.Fragments.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+    </fragment>
+</navigation>
