@@ -1,27 +1,33 @@
 package com.example.cinemaproject.Repository
 
-import MovieDatabase
 import android.app.Application
+import androidx.lifecycle.LiveData
 import com.example.cinemaproject.APIService.MovieDao
 import com.example.cinemaproject.Classes.Movie
+import com.example.cinemaproject.Classes.MovieDatabase
 
 class MovieRepository(application: Application) {
 
-    private val movieDao: MovieDao?
+    private val movieDao: MovieDao
 
     init {
         val database = MovieDatabase.getDatabase(application.applicationContext)
-        movieDao = database?.movieDao()
+        movieDao = database.movieDao()
     }
 
-    fun getMovies() = movieDao?.getMovies()
-
-    fun addMovie(movie:Movie){
-        movieDao?.addMovie(movie)
+    fun getMovies(): LiveData<List<Movie>> {
+        return movieDao.getMovies()
     }
 
-    fun deleteMovie(movie:Movie){
-        movieDao?.deleteMovie(movie)
+    fun addMovie(movie: Movie) {
+        MovieDatabase.databaseWriteExecutor.execute {
+            movieDao.addMovie(movie)
+        }
     }
 
+    fun deleteMovie(movie: Movie) {
+        MovieDatabase.databaseWriteExecutor.execute {
+            movieDao.deleteMovie(movie)
+        }
+    }
 }

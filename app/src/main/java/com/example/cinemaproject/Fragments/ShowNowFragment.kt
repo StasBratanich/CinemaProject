@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinemaproject.Adapters.MoviesAdapter
+import com.example.cinemaproject.ViewModel.MoviesViewModel
 import com.example.cinemaproject.databinding.ShowNowLayoutBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -18,12 +21,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ShowNowFragment : Fragment() {
+
     private var binding: ShowNowLayoutBinding? = null
     private val apiKey = "b947235f7bf13a6bcad6afa6e8e53d2d"
     private lateinit var moviesAdapter: MoviesAdapter
-    private val movieApiService: MovieApiService by lazy {
-        RetrofitInstance.retrofit.create(MovieApiService::class.java)
-    }
+    private val viewModel: MoviesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +43,9 @@ class ShowNowFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.movies.observe(viewLifecycleOwner, Observer {
+            moviesAdapter.updateData(it)
+        })
         fetchPopularMovies()
     }
 
@@ -48,14 +53,14 @@ class ShowNowFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val deferredMovies = (1..5).map { page ->
-                    async { movieApiService.getPopularMovies(apiKey, page).movies }
+                    async { RetrofitInstance.retrofit.create(MovieApiService::class.java).getPopularMovies(apiKey, page).movies }
                 }
                 val allMovies = deferredMovies.awaitAll().flatten()
                 withContext(Dispatchers.Main) {
-                    moviesAdapter.updateData(allMovies)
+                    allMovies.forEach { viewModel.addMovie(it) }
                 }
             } catch (e: Exception) {
-                // Handle the error
+                // Handle error
                 e.printStackTrace()
             }
         }

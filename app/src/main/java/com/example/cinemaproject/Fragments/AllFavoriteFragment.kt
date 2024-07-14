@@ -18,5 +18,4 @@ class AllFavoriteFragment : Fragment() {
         _binding = FavoriteLayoutBinding.inflate(inflater, container, false)
         return _binding?.root
     }
-
 }
