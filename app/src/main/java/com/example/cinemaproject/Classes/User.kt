@@ -1,16 +1,10 @@
 package com.example.cinemaproject.Classes
 
-class User {
-    var email : String? = null
-    var password : String? = null
-    var profileImage : String? = null
-    private var likedGames : MutableMap<String, Boolean> = mutableMapOf()
-
-    constructor(email: String?, imageUrl: String?) {
-        this.email = email
-        this.profileImage = imageUrl
-        this.likedGames = mutableMapOf()
-    }
+data class User(
+    var email: String? = null,
+    var password: String? = null
+) {
+    private var likedGames: MutableMap<String, Boolean> = mutableMapOf()
 
     fun likeGame(gameId: String) {
         likedGames[gameId] = true
@@ -29,6 +23,6 @@ class User {
     }
 
     override fun toString(): String {
-        return "UsersData(email=$email, password=$password, profileImage=$profileImage)"
+        return "User(email=$email, password=$password)"
     }
 }
