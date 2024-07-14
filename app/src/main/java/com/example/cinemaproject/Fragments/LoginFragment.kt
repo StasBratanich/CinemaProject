@@ -1,6 +1,5 @@
 package com.example.cinemaproject.Fragments
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ class LoginFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
 
-        binding.loginBtn.setOnClickListener {
+        binding.LoginBTN.setOnClickListener {
             val email = binding.loginEmail.text.toString().trim()
             val password = binding.loginPassword.text.toString().trim()
 
@@ -48,10 +47,8 @@ class LoginFragment : Fragment() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    Log.d("LoginFragment", "signInWithEmail:success")
                     findNavController().navigate(R.id.action_loginFragment_to_welcomeFragment)
                 } else {
-                    Log.w("LoginFragment", "signInWithEmail:failure", task.exception)
                     Toast.makeText(context, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
