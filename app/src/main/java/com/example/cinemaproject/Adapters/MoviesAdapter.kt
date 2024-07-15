@@ -31,7 +31,7 @@ class MoviesAdapter(private var movies: List<Movie>) : RecyclerView.Adapter<Movi
     class MovieViewHolder(private val binding: RvMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             binding.RvMovieName.text = movie.title
-            binding.RvMovieYear.text = movie.release_date
+            //binding.RvMovieYear.text = movie.release_date
             movie.posterPath?.let {
                 val imageUrl = "https://image.tmdb.org/t/p/w500$it"
                 Glide.with(binding.root)

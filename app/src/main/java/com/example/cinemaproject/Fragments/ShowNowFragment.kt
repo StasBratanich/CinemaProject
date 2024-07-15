@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cinemaproject.Adapters.MoviesAdapter
 import com.example.cinemaproject.ViewModel.MoviesViewModel
 import com.example.cinemaproject.databinding.ShowNowLayoutBinding
@@ -35,7 +35,7 @@ class ShowNowFragment : Fragment() {
         binding = ShowNowLayoutBinding.inflate(inflater, container, false)
         moviesAdapter = MoviesAdapter(emptyList())
         binding?.ShowNowRV?.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2)
             adapter = moviesAdapter
         }
         return binding!!.root
