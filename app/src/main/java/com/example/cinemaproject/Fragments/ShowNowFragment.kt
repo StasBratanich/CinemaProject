@@ -23,7 +23,7 @@ import kotlinx.coroutines.withContext
 class ShowNowFragment : Fragment() {
 
     private var binding: ShowNowLayoutBinding? = null
-    private val apiKey = "b947235f7bf13a6bcad6afa6e8e53d2d"
+    private val apiKey = "X"
     private lateinit var moviesAdapter: MoviesAdapter
     private val viewModel: MoviesViewModel by viewModels()
 
