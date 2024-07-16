@@ -2,17 +2,25 @@ package com.example.cinemaproject.Fragments
 
 import MovieApiService
 import RetrofitInstance
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import com.example.cinemaproject.Adapters.MoviesAdapter
+import com.example.cinemaproject.Classes.Movie
+import com.example.cinemaproject.R
 import com.example.cinemaproject.ViewModel.MoviesViewModel
+import com.example.cinemaproject.databinding.CardMovieDetailsBinding
 import com.example.cinemaproject.databinding.ShowNowLayoutBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -33,7 +41,9 @@ class ShowNowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = ShowNowLayoutBinding.inflate(inflater, container, false)
-        moviesAdapter = MoviesAdapter(emptyList())
+        moviesAdapter = MoviesAdapter(emptyList()) { movie ->
+            showMovieDetails(movie)
+        }
         binding?.ShowNowRV?.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = moviesAdapter
@@ -65,6 +75,38 @@ class ShowNowFragment : Fragment() {
             }
         }
     }
+
+    private fun showMovieDetails(movie: Movie) {
+        val dialog = Dialog(requireContext())
+        val dialogBinding = CardMovieDetailsBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogBinding.MovieCardName.text = movie.title
+        dialogBinding.MovieCardYear.text = movie.release_date
+        dialogBinding.MovieCardDescription.text = movie.overview
+
+        movie.posterPath?.let {
+            val imageUrl = "https://image.tmdb.org/t/p/w500$it"
+            Glide.with(requireContext())
+                .load(imageUrl)
+                .into(dialogBinding.MovieCardImage)
+        }
+
+        dialogBinding.likeButton.setImageResource(if (movie.isLiked) R.drawable.ic_heart_full else R.drawable.ic_heart_empty)
+        dialogBinding.likeButton.setOnClickListener {
+            movie.isLiked = !movie.isLiked
+            val scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_anim)
+            dialogBinding.likeButton.startAnimation(scaleAnimation)
+            dialogBinding.likeButton.setImageResource(if (movie.isLiked) R.drawable.ic_heart_full else R.drawable.ic_heart_empty)
+        }
+
+        val width = ViewGroup.LayoutParams.MATCH_PARENT
+        val height = ViewGroup.LayoutParams.WRAP_CONTENT
+        dialog.window?.setLayout(width, height)
+        dialog.show()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
