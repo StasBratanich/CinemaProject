@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -22,6 +23,9 @@ import com.example.cinemaproject.R
 import com.example.cinemaproject.ViewModel.MoviesViewModel
 import com.example.cinemaproject.databinding.CardMovieDetailsBinding
 import com.example.cinemaproject.databinding.ShowNowLayoutBinding
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -31,7 +35,7 @@ import kotlinx.coroutines.withContext
 class ShowNowFragment : Fragment() {
 
     private var binding: ShowNowLayoutBinding? = null
-    private val apiKey = "X"
+    private val apiKey = "b947235f7bf13a6bcad6afa6e8e53d2d"
     private lateinit var moviesAdapter: MoviesAdapter
     private val viewModel: MoviesViewModel by viewModels()
 
@@ -101,14 +105,46 @@ class ShowNowFragment : Fragment() {
             dialogBinding.likeButton.setImageResource(if (movie.isLiked) R.drawable.ic_heart_full else R.drawable.ic_heart_empty)
         }
 
+        fetchTrailerVideo(movie.id, dialogBinding)
+
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
         dialog.window?.setLayout(width, height)
         dialog.show()
     }
 
+    private fun fetchTrailerVideo(movieId: Int, dialogBinding: CardMovieDetailsBinding) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitInstance.retrofit.create(MovieApiService::class.java)
+                    .getMovieVideos(movieId, apiKey)
+                val trailer =
+                    response.videos.firstOrNull { it.type == "Trailer" && it.site == "YouTube" }
+                withContext(Dispatchers.Main) {
+                    trailer?.let {
+                        dialogBinding.MovieCardTrailerLink.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                            override fun onReady(youTubePlayer: YouTubePlayer) {
+                                youTubePlayer.cueVideo(it.key, 0f)
+                            }
 
-    override fun onDestroyView() {
+                            override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
+                                Toast.makeText(requireContext(), "Error loading trailer", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    } ?: run {
+                        Toast.makeText(requireContext(), "No trailer available", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Failed to fetch trailer", Toast.LENGTH_SHORT).show()
+                }
+                e.printStackTrace()
+            }
+        }
+    }
+
+override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }

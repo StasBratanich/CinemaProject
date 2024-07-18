@@ -1,8 +1,10 @@
 
+import com.example.cinemaproject.APIService.VideoResponse
 import com.example.cinemaproject.Classes.MovieResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 object RetrofitInstance {
@@ -22,4 +24,10 @@ interface MovieApiService {
         @Query("api_key") apiKey: String,
         @Query("page") page: Int
     ): MovieResponse
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): VideoResponse
 }
