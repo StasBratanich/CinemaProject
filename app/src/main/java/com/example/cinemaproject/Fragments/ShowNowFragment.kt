@@ -24,7 +24,10 @@ import com.example.cinemaproject.ViewModel.MoviesViewModel
 import com.example.cinemaproject.databinding.CardMovieDetailsBinding
 import com.example.cinemaproject.databinding.ShowNowLayoutBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -42,6 +45,8 @@ class ShowNowFragment : Fragment() {
     private val viewModel: MoviesViewModel by viewModels()
     private val userId = FirebaseAuth.getInstance().currentUser?.uid
     private val userRef = FirebaseDatabase.getInstance().getReference("users").child(userId ?: "")
+    private lateinit var likedMoviesListener: ValueEventListener
+    private val likedMoviesMap = HashMap<Int, Boolean>()
 
 
     override fun onCreateView(
@@ -64,8 +69,37 @@ class ShowNowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.movies.observe(viewLifecycleOwner, Observer {
             moviesAdapter.updateData(it)
+            fetchLikedMovies()
         })
         fetchPopularMovies()
+    }
+
+    private fun fetchLikedMovies() {
+        likedMoviesListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                likedMoviesMap.clear()
+                snapshot.child("liked_movies").children.forEach { movieSnapshot ->
+                    val movieId = movieSnapshot.key?.toIntOrNull()
+                    movieId?.let {
+                        likedMoviesMap[it] = true
+                    }
+                }
+                updateMovieLikedStates()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle onCancelled
+            }
+        }
+
+        userRef.addListenerForSingleValueEvent(likedMoviesListener)
+    }
+
+    private fun updateMovieLikedStates() {
+        viewModel.movies.value?.forEach { movie ->
+            movie.isLiked = likedMoviesMap.containsKey(movie.id)
+        }
+        moviesAdapter.notifyDataSetChanged()
     }
 
     private fun fetchPopularMovies() {
@@ -115,24 +149,17 @@ class ShowNowFragment : Fragment() {
                 // Remove the movie from Firebase
                 userRef.child("liked_movies").child(movie.id.toString()).removeValue()
                     .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Movie unliked and removed!", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener { e ->
                         Toast.makeText(requireContext(), "Failed to remove movie: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
 
             } else {
-                // Movie is currently not liked, so like it
                 movie.isLiked = true
                 dialogBinding.likeButton.setImageResource(R.drawable.ic_heart_full)
 
-                // Fetch user's existing data to retain email and profileImage
                 userRef.get().addOnSuccessListener { snapshot ->
                     if (snapshot.exists()) {
-                        val email = snapshot.child("email").getValue(String::class.java)
-                        val profileImage = snapshot.child("profileImage").getValue(String::class.java)
-
-                        // Prepare the movie data to store under liked_movies
                         val likedMovieData = HashMap<String, Any>()
                         likedMovieData["name"] = movie.title
                         likedMovieData["poster_link"] = "https://image.tmdb.org/t/p/w500${movie.posterPath}"
@@ -140,10 +167,8 @@ class ShowNowFragment : Fragment() {
                         likedMovieData["trailer_url"] = movie.trailerUrl ?: ""
                         likedMovieData["description"] = movie.overview
 
-                        // Add liked movie under the user's node
                         userRef.child("liked_movies").child(movie.id.toString()).setValue(likedMovieData)
                             .addOnSuccessListener {
-                                Toast.makeText(requireContext(), "Movie liked and saved!", Toast.LENGTH_SHORT).show()
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(requireContext(), "Failed to save movie: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -152,7 +177,6 @@ class ShowNowFragment : Fragment() {
                 }
             }
         }
-
 
         fetchTrailerVideoAndUpdateMovie(movie, dialogBinding)
 
