@@ -17,5 +17,8 @@ data class Movie(
     val overview: String,
     @SerializedName("poster_path")
     val posterPath: String,
-    var isLiked: Boolean = false
+    @SerializedName("trailer_url")
+    var trailerUrl: String?,
+    var isLiked: Boolean = false,
+    var userId: String? = null
 )

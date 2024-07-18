@@ -23,6 +23,8 @@ import com.example.cinemaproject.R
 import com.example.cinemaproject.ViewModel.MoviesViewModel
 import com.example.cinemaproject.databinding.CardMovieDetailsBinding
 import com.example.cinemaproject.databinding.ShowNowLayoutBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -38,6 +40,9 @@ class ShowNowFragment : Fragment() {
     private val apiKey = "b947235f7bf13a6bcad6afa6e8e53d2d"
     private lateinit var moviesAdapter: MoviesAdapter
     private val viewModel: MoviesViewModel by viewModels()
+    private val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private val userRef = FirebaseDatabase.getInstance().getReference("users").child(userId ?: "")
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,13 +104,57 @@ class ShowNowFragment : Fragment() {
 
         dialogBinding.likeButton.setImageResource(if (movie.isLiked) R.drawable.ic_heart_full else R.drawable.ic_heart_empty)
         dialogBinding.likeButton.setOnClickListener {
-            movie.isLiked = !movie.isLiked
             val scaleAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale_anim)
             dialogBinding.likeButton.startAnimation(scaleAnimation)
-            dialogBinding.likeButton.setImageResource(if (movie.isLiked) R.drawable.ic_heart_full else R.drawable.ic_heart_empty)
+
+            if (movie.isLiked) {
+                // Movie is currently liked, so unlike it
+                movie.isLiked = false
+                dialogBinding.likeButton.setImageResource(R.drawable.ic_heart_empty)
+
+                // Remove the movie from Firebase
+                userRef.child("liked_movies").child(movie.id.toString()).removeValue()
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Movie unliked and removed!", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Failed to remove movie: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+            } else {
+                // Movie is currently not liked, so like it
+                movie.isLiked = true
+                dialogBinding.likeButton.setImageResource(R.drawable.ic_heart_full)
+
+                // Fetch user's existing data to retain email and profileImage
+                userRef.get().addOnSuccessListener { snapshot ->
+                    if (snapshot.exists()) {
+                        val email = snapshot.child("email").getValue(String::class.java)
+                        val profileImage = snapshot.child("profileImage").getValue(String::class.java)
+
+                        // Prepare the movie data to store under liked_movies
+                        val likedMovieData = HashMap<String, Any>()
+                        likedMovieData["name"] = movie.title
+                        likedMovieData["poster_link"] = "https://image.tmdb.org/t/p/w500${movie.posterPath}"
+                        likedMovieData["release_date"] = movie.release_date
+                        likedMovieData["trailer_url"] = movie.trailerUrl ?: ""
+                        likedMovieData["description"] = movie.overview
+
+                        // Add liked movie under the user's node
+                        userRef.child("liked_movies").child(movie.id.toString()).setValue(likedMovieData)
+                            .addOnSuccessListener {
+                                Toast.makeText(requireContext(), "Movie liked and saved!", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(requireContext(), "Failed to save movie: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+            }
         }
 
-        fetchTrailerVideo(movie.id, dialogBinding)
+
+        fetchTrailerVideoAndUpdateMovie(movie, dialogBinding)
 
         val width = ViewGroup.LayoutParams.MATCH_PARENT
         val height = ViewGroup.LayoutParams.WRAP_CONTENT
@@ -113,25 +162,26 @@ class ShowNowFragment : Fragment() {
         dialog.show()
     }
 
-    private fun fetchTrailerVideo(movieId: Int, dialogBinding: CardMovieDetailsBinding) {
+    private fun fetchTrailerVideoAndUpdateMovie(movie: Movie, dialogBinding: CardMovieDetailsBinding) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitInstance.retrofit.create(MovieApiService::class.java)
-                    .getMovieVideos(movieId, apiKey)
+                    .getMovieVideos(movie.id, apiKey)
                 val trailer =
                     response.videos.firstOrNull { it.type == "Trailer" && it.site == "YouTube" }
                 withContext(Dispatchers.Main) {
-                    trailer?.let {
+                    if (trailer != null) {
+                        movie.trailerUrl = "https://www.youtube.com/watch?v=${trailer.key}"
                         dialogBinding.MovieCardTrailerLink.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                             override fun onReady(youTubePlayer: YouTubePlayer) {
-                                youTubePlayer.cueVideo(it.key, 0f)
+                                youTubePlayer.cueVideo(trailer.key, 0f)
                             }
 
                             override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {
                                 Toast.makeText(requireContext(), "Error loading trailer", Toast.LENGTH_SHORT).show()
                             }
                         })
-                    } ?: run {
+                    } else {
                         Toast.makeText(requireContext(), "No trailer available", Toast.LENGTH_SHORT).show()
                     }
                 }
