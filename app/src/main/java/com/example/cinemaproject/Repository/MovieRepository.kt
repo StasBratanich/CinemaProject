@@ -30,4 +30,5 @@ class MovieRepository(application: Application) {
             movieDao.deleteMovie(movie)
         }
     }
+
 }

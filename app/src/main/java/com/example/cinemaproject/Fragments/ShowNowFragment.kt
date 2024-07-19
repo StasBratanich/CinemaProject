@@ -39,7 +39,8 @@ import kotlinx.coroutines.withContext
 
 class ShowNowFragment : Fragment() {
 
-    private var binding: ShowNowLayoutBinding? = null
+    private var _binding: ShowNowLayoutBinding? = null
+    private val binding get() = _binding!!
     private val apiKey = "b947235f7bf13a6bcad6afa6e8e53d2d"
     private lateinit var moviesAdapter: MoviesAdapter
     private val viewModel: MoviesViewModel by viewModels()
@@ -54,7 +55,7 @@ class ShowNowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = ShowNowLayoutBinding.inflate(inflater, container, false)
+        _binding = ShowNowLayoutBinding.inflate(inflater, container, false)
         moviesAdapter = MoviesAdapter(emptyList()) { movie ->
             showMovieDetails(movie)
         }
@@ -62,7 +63,7 @@ class ShowNowFragment : Fragment() {
             layoutManager = GridLayoutManager(context, 2)
             adapter = moviesAdapter
         }
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -220,6 +221,6 @@ class ShowNowFragment : Fragment() {
 
 override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }

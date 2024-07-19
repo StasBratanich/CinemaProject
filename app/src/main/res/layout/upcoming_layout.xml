@@ -3,21 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/movie_app_background"
+    android:orientation="vertical"
     tools:context=".Fragments.UpcomingFragment">
 
-    <TextView
-        android:id="@+id/Main_line"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/purple"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="Upcoming Movies"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        tools:ignore="RtlHardcoded" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ShowNowTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:text="Upcoming movies"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/ShowNowSubTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="save for later"
+                android:paddingBottom="5dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:ignore="RtlHardcoded" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/upcomingRecycleView"/>
 
 
 </LinearLayout>

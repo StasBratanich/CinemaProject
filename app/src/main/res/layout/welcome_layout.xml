@@ -9,76 +9,90 @@
     android:padding="16dp"
     tools:context=".Fragments.WelcomeFragment">
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:src="@drawable/movie_app_logo"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingBottom="24dp"
+        android:layout_marginBottom="15dp"
         android:text="Welcome to the Cinema app!"
-        android:textColor="@android:color/black"
-        android:textSize="29sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="Feature:"
+        android:textColor="@color/white"
         android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="• Click to view details of the movie"
-        android:textSize="20sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="• Long click to delete the movie"
-        android:textSize="20sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="24dp"
-        android:text="• Click the star icon to add to the favorite list!"
-        android:textSize="20sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:text="Types of movies:"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/Show_now_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
+        android:background="@drawable/button_background"
+        android:padding="15dp"
         android:text="Show Now"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="• You can see the top 100 movies worldwide right now"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="• Click on a movie to view details"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="• Click the LIKE button to track your favorite movies"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/Upcoming_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
+        android:background="@drawable/button_background"
+        android:padding="15dp"
         android:text="Upcoming Movies"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="• Long click to delete the movie"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/Favorite_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="12dp"
+        android:background="@drawable/button_background"
+        android:padding="15dp"
         android:text="Favorite Movies"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="• Manage and track your own favorite movies list"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 </LinearLayout>
