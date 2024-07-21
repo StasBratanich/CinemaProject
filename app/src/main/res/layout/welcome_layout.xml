@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginBottom="15dp"
-        android:text="Welcome to the Cinema app!"
+        android:text="@string/welcome_to_the_cinema_app"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"/>
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:padding="15dp"
-        android:text="Show Now"
+        android:text="@string/show_now"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="• You can see the top 100 movies worldwide right now"
+        android:text="@string/you_can_see_the_top_100_movies_worldwide_right_now"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="• Click on a movie to view details"
+        android:text="@string/click_on_a_movie_to_view_details"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="• Click the LIKE button to track your favorite movies"
+        android:text="@string/click_the_like_button_to_track_your_favorite_movies"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:padding="15dp"
-        android:text="Upcoming Movies"
+        android:text="@string/upcoming_movies"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -74,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="• Long click to delete the movie"
+        android:text="@string/long_click_to_delete_the_movie"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/button_background"
         android:padding="15dp"
-        android:text="Favorite Movies"
+        android:text="@string/favorite_movies"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
@@ -92,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="• Manage and track your own favorite movies list"
+        android:text="@string/manage_and_track_your_own_favorite_movies_list"
         android:textColor="@color/white"
         android:textSize="20sp" />
 </LinearLayout>

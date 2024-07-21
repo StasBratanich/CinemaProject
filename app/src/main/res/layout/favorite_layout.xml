@@ -40,7 +40,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="2dp"
-                android:text="Your Favorite Movies"
+                android:text="@string/your_favorite_movies"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="long press to delete a movie"
+                android:text="@string/long_press_to_delete_a_movie"
                 android:paddingBottom="5dp"
                 android:textColor="@color/black"
                 android:textSize="15sp" />

@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    android:text="Movie Name"
+                    android:text="@string/movie_name"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:maxLines="1"
@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="4dp"
-                    android:text="Movie Description"
+                    android:text="@string/movie_description"
                     android:textSize="16sp"
                     android:maxLines="4"
                     android:ellipsize="end"/>

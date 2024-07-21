@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.cinemaproject.R
@@ -95,7 +96,10 @@ class RegisterFragment : Fragment() {
 
         authViewModel.authState.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                findNavController().navigate(R.id.action_registerFragment_to_welcomeFragment)
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.my_nav, true)
+                    .build()
+                findNavController().navigate(R.id.action_registerFragment_to_welcomeFragment, null, navOptions)
             }
             result.onFailure { exception ->
                 Toast.makeText(context, "${exception.message}", Toast.LENGTH_SHORT).show()
@@ -104,10 +108,10 @@ class RegisterFragment : Fragment() {
     }
 
     private fun showImageSourceSelectionDialog() {
-        val options = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
+        val options = arrayOf(getString(R.string.take_photo), getString(R.string.choose_from_gallery), getString(R.string.cancel))
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Choose your profile picture")
+        builder.setTitle(getString(R.string.choose_your_profile_picture))
         builder.setItems(options) { dialog, which ->
             when (which) {
                 0 -> takePhoto()

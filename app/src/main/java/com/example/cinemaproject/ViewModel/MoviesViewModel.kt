@@ -26,18 +26,6 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     private val _upcomingMovies = MutableLiveData<List<Movie>>()
     val upcomingMovies: LiveData<List<Movie>> get() = _upcomingMovies
 
-    fun addMovie(movie: Movie) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.addMovie(movie)
-        }
-    }
-
-    fun deleteMovie(movie: Movie) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteMovie(movie)
-        }
-    }
-
     fun fetchPopularMovies(apiKey: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {

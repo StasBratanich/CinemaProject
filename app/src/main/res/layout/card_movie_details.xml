@@ -52,7 +52,7 @@
                         android:id="@+id/MovieCardImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:contentDescription="Poster Path" />
+                        android:contentDescription="@string/poster_path" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -68,7 +68,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:padding="3dp"
-                        android:text="movie name"
+                        android:text="@string/movie_name"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
                         android:gravity="center"
                         android:padding="3dp"
 
-                        android:text="movie year"
+                        android:text="@string/movie_year"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="movie description" />
+                        android:text="@string/movie_description" />
 
                 </LinearLayout>
 
@@ -105,7 +105,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_heart_empty"
-                android:contentDescription="Like Button" />
+                android:contentDescription="@string/like_button" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

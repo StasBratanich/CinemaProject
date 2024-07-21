@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="your_favorite_movies">הסרטים המועדפים עלייך</string>
+    <string name="poster_path">דרך לפוסטר</string>
+    <string name="long_press_to_delete_a_movie">"לחיצה ארוכה כדי למחוק את הסרט "</string>
+    <string name="movie_name">שם הסרט</string>
+    <string name="movie_year">שנת יציאה</string>
+    <string name="movie_description">תיאור הסרט</string>
+    <string name="like_button">כפתור אהבתי</string>
+    <string name="movie_app">אפליקציית סרטים</string>
+    <string name="discover_the_latest_upcoming_movies_get_detailed_information_and_create_your_personalized_favorite_list">תגלה על הסרטים שצפויים לצאת ואת המידע עליהם ותיצור רשימת סרטים המועדפים עליך!</string>
+    <string name="login">התחבר</string>
+    <string name="register">הירשם</string>
+    <string name="register_account">רישום חשבון</string>
+    <string name="profile_image">תמונת פרופיל</string>
+    <string name="confirm_password">אישור סיסמא</string>
+    <string name="login_account">התחבר לחשבון</string>
+    <string name="email">מייל</string>
+    <string name="password">סיסמא</string>
+    <string name="_100_most_popular_movies">"100 הסרטים הפופולארים "</string>
+    <string name="right_now">ברגע זה</string>
+    <string name="upcoming_movies">סרטים שיוצאים בקרוב</string>
+    <string name="save_for_later">שמור לאחר כך</string>
+    <string name="welcome_to_the_cinema_app">ברוך הבא לאפליקציית הסרטים!</string>
+    <string name="show_now">מופיע עכשיו</string>
+    <string name="you_can_see_the_top_100_movies_worldwide_right_now">• אתה יכול לצפות ב - 100 הסרטים המובילים כעת בעולם</string>
+    <string name="click_on_a_movie_to_view_details">•לחיצה על הסרט תראה את כל הפרטים עליו</string>
+    <string name="click_the_like_button_to_track_your_favorite_movies">"•לחיצה על כפתור ״אהבתי״ תוסיף את הסרט לרשימת המועדפים "</string>
+    <string name="long_click_to_delete_the_movie">• לחיצה ארוכה כדי למחוק את הסרט</string>
+    <string name="favorite_movies">סרטים מועדפים</string>
+    <string name="manage_and_track_your_own_favorite_movies_list">•תנהל ותעקוב אחרי הסרטים המועדפים עלייך</string>
+    <string name="app_name">פרוייקט קולנוע</string>
+    <string name="hello_blank_fragment">דף ריק</string>
+    <string name="take_photo">צלם תמונה</string>
+    <string name="choose_from_gallery">בחר מהגלריה</string>
+    <string name="cancel">ביטול</string>
+    <string name="choose_your_profile_picture">בחר תמונת פרופיל</string>
+    <string name="delete_question">האם אתה בטוח שברצונך למחוק?</string>
+    <string name="delete">מחק</string>
+
+</resources>

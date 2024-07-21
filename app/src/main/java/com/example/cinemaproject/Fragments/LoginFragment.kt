@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.cinemaproject.R
 import com.example.cinemaproject.Repository.AuthRepository
@@ -39,7 +40,11 @@ class LoginFragment : Fragment() {
         authViewModel.authState.observe(viewLifecycleOwner, Observer { result ->
             result.fold(
                 onSuccess = {
-                    findNavController().navigate(R.id.action_loginFragment_to_welcomeFragment)
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(R.id.my_nav, true)
+                        .build()
+
+                    findNavController().navigate(R.id.action_loginFragment_to_welcomeFragment, null, navOptions)
                 },
                 onFailure = { exception ->
                     Toast.makeText(context, "Authentication failed: ${exception.message}", Toast.LENGTH_SHORT).show()

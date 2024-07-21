@@ -68,13 +68,11 @@ class FavoriteMoviesAdapter(private val context: Context, private val favoriteMo
 
     private fun showDeleteConfirmationDialog(movie: Movie) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Confirm Delete")
-            .setMessage("Are you sure you want to delete ${movie.title}?")
-            .setPositiveButton("Delete") { dialog, which ->
-                // Delete the movie
+        builder.setTitle(R.string.delete_question)
+            .setPositiveButton(R.string.delete) { dialog, _ ->
                 deleteMovie(movie)
             }
-            .setNegativeButton("Cancel") { dialog, which ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
