@@ -42,7 +42,7 @@ abstract class BaseMovieFragment : Fragment() {
     protected val userRef = FirebaseDatabase.getInstance().getReference("users").child(userId ?: "")
     private lateinit var likedMoviesListener: ValueEventListener
     protected val likedMoviesMap = HashMap<Int, Boolean>()
-    protected val apiKey = "b947235f7bf13a6bcad6afa6e8e53d2d"
+    protected val apiKey = "X"
 
     protected abstract val recyclerView: RecyclerView
 
