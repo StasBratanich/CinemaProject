@@ -18,17 +18,4 @@ class MovieRepository(application: Application) {
     fun getMovies(): LiveData<List<Movie>> {
         return movieDao.getMovies()
     }
-
-    fun addMovie(movie: Movie) {
-        MovieDatabase.databaseWriteExecutor.execute {
-            movieDao.addMovie(movie)
-        }
-    }
-
-    fun deleteMovie(movie: Movie) {
-        MovieDatabase.databaseWriteExecutor.execute {
-            movieDao.deleteMovie(movie)
-        }
-    }
-
 }

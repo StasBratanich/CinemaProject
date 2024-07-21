@@ -21,7 +21,7 @@ class FavoriteMoviesAdapter(private val context: Context, private val favoriteMo
 
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private lateinit var userRef: DatabaseReference
+    private var userRef: DatabaseReference
 
     init {
         val currentUser = auth.currentUser

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinemaproject.Adapters.FavoriteMoviesAdapter
@@ -40,11 +41,9 @@ class AllFavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize Firebase components
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Initialize RecyclerView
         binding.recyclerViewFavorite.layoutManager = LinearLayoutManager(requireContext())
         favoriteMoviesList = mutableListOf()
         favoriteMoviesAdapter = FavoriteMoviesAdapter(requireContext(), favoriteMoviesList)
@@ -74,17 +73,16 @@ class AllFavoriteFragment : Fragment() {
                     val posterPath = movieSnapshot.child("poster_link").getValue(String::class.java)
                     val trailerUrl = movieSnapshot.child("trailer_url").getValue(String::class.java)
 
-                    // Ensure essential fields are not null before creating Movie object
                     if (movieId != null && releaseDate != null && title != null && overview != null) {
                         val movie = Movie(
-                            id = movieId.toInt(),  // Convert movieId to Int if it's stored as String
+                            id = movieId.toInt(),
                             release_date = releaseDate,
                             title = title,
                             overview = overview,
-                            posterPath = posterPath ?: "",  // Handle nullable posterPath
+                            posterPath = posterPath ?: "",
                             trailerUrl = trailerUrl,
-                            isLiked = true,  // Example of setting isLiked
-                            userId = userId  // Example of setting userId
+                            isLiked = true,
+                            userId = userId
                         )
                         favoriteMoviesList.add(movie)
                     }
@@ -93,7 +91,7 @@ class AllFavoriteFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle database error
+                Toast.makeText(context, "Failed to load favorite movies.", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -119,7 +117,7 @@ class AllFavoriteFragment : Fragment() {
                 favoriteMoviesAdapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
-                // Handle failure
+                Toast.makeText(context, "Failed to delete all movies.", Toast.LENGTH_SHORT).show()
             }
     }
 

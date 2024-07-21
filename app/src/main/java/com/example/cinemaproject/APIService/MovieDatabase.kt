@@ -17,7 +17,6 @@ abstract class MovieDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: MovieDatabase? = null
 
-        // Create a single-thread executor to perform database operations
         val databaseWriteExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
         fun getDatabase(context: Context): MovieDatabase {

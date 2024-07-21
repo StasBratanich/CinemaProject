@@ -137,10 +137,8 @@ abstract class BaseMovieFragment : Fragment() {
 
     private fun handleLikeButtonClick(movie: Movie, likeButton: ImageView) {
         if (movie.isLiked) {
-            // Movie is currently liked, so unlike it
             movie.isLiked = false
             likeButton.setImageResource(R.drawable.ic_heart_empty)
-            // Remove the movie from Firebase
             userRef.child("liked_movies").child(movie.id.toString()).removeValue()
                 .addOnFailureListener { e ->
                     Toast.makeText(requireContext(), "Failed to remove movie: ${e.message}", Toast.LENGTH_SHORT).show()
