@@ -50,8 +50,13 @@ The Cinema App leverages Firebase for real-time database management and user aut
 
 - Lists the movies that the user has marked as favorites
 
-***
 - App supports Landscapre orientation
-- App supports English and Hebre languages
+- App supports English and Hebrew languages
 
 ![9](https://github.com/user-attachments/assets/f0a07f31-ef2e-4e53-8edc-5fd5686e5a2f)
+
+***
+
+✉️ [bstasb@gmail.com](url)  
+💿 https://github.com/StasBratanich  
+🖥️ https://www.linkedin.com/in/stas-bratanich-computer-science/  
